@@ -1,0 +1,150 @@
+<Project>
+
+	<Choose>
+		<When Condition="'$(SolutionDir)' == ''">
+			<PropertyGroup>
+				<SolutionDir>$(ProjectDir)..\</SolutionDir>
+			</PropertyGroup>
+		</When>
+	</Choose>
+
+	<Choose>
+		<When Condition="'$(Configurations)' == ''">
+			<PropertyGroup>
+				<Configurations>1.3;1.4;1.3_DEBUG;1.4_DEBUG</Configurations>
+			</PropertyGroup>
+		</When>
+	</Choose>
+
+	<Choose>
+
+		<When Condition="$(Configuration.StartsWith('1.3'))">
+
+			<PropertyGroup>
+				<GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
+				<DefineConstants>$(DefineConstants);v1_3</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.*" ExcludeAssets="runtime" />
+			</ItemGroup>
+
+		</When>
+		<When Condition="$(Configuration.StartsWith('1.4'))">
+
+			<PropertyGroup>
+				<GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
+				<DefineConstants>$(DefineConstants);v1_4</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.*-*" ExcludeAssets="runtime" />
+			</ItemGroup>
+
+		</When>
+
+	</Choose>
+
+	<Choose>
+		<When Condition="$(Configuration.EndsWith('DEBUG'))">
+			<PropertyGroup>
+				<DebugType>full</DebugType>
+				<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<DebugType>none</DebugType>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<OutputType>Library</OutputType>
+		<LangVersion>preview</LangVersion>
+		<Nullable>annotations</Nullable>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "."))</RootNamespace>
+		<NoWarn>MSB3052;CS8618;CS8603</NoWarn>
+
+		<ModName>$(AssemblyName)</ModName>
+
+		<ModBaseOutputPath>$(ProjectDir)build\</ModBaseOutputPath>
+		<ModOutputPath>$(ModBaseOutputPath)$(ModName)\</ModOutputPath>
+
+		<ModVersionPath>$(Configuration.Replace('_DEBUG', ''))\</ModVersionPath>
+		<ModOutputVersionPath>$(ModOutputPath)$(ModVersionPath)</ModOutputVersionPath>
+
+		<ModAssembliesPath>$(ModVersionPath)Assemblies\</ModAssembliesPath>
+		<ModOutputAssembliesPath>$(ModOutputPath)$(ModAssembliesPath)</ModOutputAssembliesPath>
+
+		<PackageOutputPath>$(ProjectDir)</PackageOutputPath>
+
+		<AssetsDir>$(ProjectDir)Assets\</AssetsDir>
+
+		<GameModsPath>$(GameDir)Mods\</GameModsPath>
+		<GameModPath>$(GameModsPath)$(ModName)\</GameModPath>
+		<GameModVersionPath>$(GameModPath)$(ModVersionPath)</GameModVersionPath>
+		<GameModAssembliesPath>$(GameModPath)$(ModAssembliesPath)</GameModAssembliesPath>
+
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+		<RunPreBuildEvent>Always</RunPreBuildEvent>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Publicize Include="Assembly-CSharp" />
+		<PackageReference Include="Krafs.Publicizer" Version="1.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<UpToDateCheckInput Include="$(AssetsDir)**"/>
+		<!-- Check for updated Assets files -->
+
+		<!-- Hide output -->
+		<Compile Remove="$(ModBaseOutputPath)**" />
+		<EmbeddedResource Remove="$(ModBaseOutputPath)**" />
+		<None Remove="$(ModBaseOutputPath)**" />
+	</ItemGroup>
+
+	<!-- Check for updated Assets files -->
+	<Target Name="cleanup" AfterTargets="BeforeClean">
+		<Exec Command="rmdir /S /Q &quot;$(ModBaseOutputPath)&quot;" />
+		<Exec Command="rmdir /S /Q &quot;$(BaseOutputPath)&quot;" />
+		<Exec Command="rmdir /S /Q &quot;$(BaseIntermediateOutputPath)&quot;" />
+		<Exec Command="rmdir /S /Q &quot;$(GameModPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(AssetsDir)&quot; &quot;$(ModOutputPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputPath)&quot; &quot;$(GameModPath)&quot;" />
+	</Target>
+
+	<Target Name="postbuild" AfterTargets="PostBuildEvent">
+		<MakeDir Directories="$(ModOutputPath)" />
+		<Exec Command="rmdir /S /Q &quot;$(ModOutputAssembliesPath)&quot;" />
+		<Exec Command="rmdir /S /Q &quot;$(GameModAssembliesPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(OutputPath)&quot; &quot;$(ModOutputAssembliesPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputAssembliesPath)&quot; &quot;$(GameModAssembliesPath)/&quot;" />
+
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(AssetsDir)&quot; &quot;$(ModOutputPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputPath)&quot; &quot;$(GameModPath)&quot;" />
+	</Target>
+
+	<ItemGroup>
+		<Using Include="System" />
+		<Using Include="System.Reflection" />
+		<Using Include="System.Collections" />
+		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Linq" />
+		<Using Include="UnityEngine" />
+		<Using Include="RimWorld" />
+		<Using Include="Verse" />
+		<Using Include="Verse.AI" />
+		<Using Static="true"
+			   Include="Verse.TranslatorFormattedStringExtensions"/>
+		<Using Alias="Random" Include="Verse.Rand" />
+	</ItemGroup>
+
+</Project>

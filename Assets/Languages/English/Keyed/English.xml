@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Ask to reunite</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Ask to unite</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Tried too recently</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>ask</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} declined to unite.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Unconvincing\n{0} chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} was convinced.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Convincing\n{0} chance</WeAreUnited_SucceededMote>
+</LanguageData>

@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Попросить воссоединиться</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Попросить объединиться</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Попытка была недавно</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>просить</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} не смогли убедить.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Неубедительно\n{0} шанс</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} смогли убедить.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Убедительно\n{0} шанс</WeAreUnited_SucceededMote>
+</LanguageData>

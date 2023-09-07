@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<JobDef>
+		<defName>AskPawnToUnite</defName>
+		<driverClass>WeAreUnited.JobDriver_AskToUnite</driverClass>
+		<reportString>convincing to unite.</reportString>
+	</JobDef>
+
+</Defs>

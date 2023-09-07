@@ -1,0 +1,15 @@
+<Patch>
+    <Operation Class="PatchOperationSequence">
+        <!--
+        <success>Always</success> 
+        -->
+        <operations>
+            <li Class="PatchOperationAdd">
+                <xpath>Defs/ThingDef[@Name="BasePawn"]/comps</xpath>
+                <value>
+                    <li Class="WeAreUnited.UniteComp_Properties" />
+                </value>
+            </li>
+        </operations>
+    </Operation>
+</Patch>
