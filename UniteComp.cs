@@ -38,7 +38,7 @@ public class UniteComp : ThingComp
 
         var translation = Translations.FloatMenu_NotRelated;
 
-        if (target is { relations: var relations })
+        if (target is { relations: { } relations })
             if (relations.RelatedPawns.Contains(pawn))
                 translation = Translations.FloatMenu;
         
