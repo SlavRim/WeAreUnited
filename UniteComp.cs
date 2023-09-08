@@ -5,8 +5,16 @@ public class UniteComp : ThingComp
     public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
     {
         var options = base.CompFloatMenuOptions(selPawn);
-        
-        var option = GetMenuOption(selPawn, parent as Pawn);
+
+        FloatMenuOption option = null;
+        try
+        {
+            option = GetMenuOption(selPawn, parent as Pawn);
+        }
+        catch (Exception exception)
+        {
+            Log.Error(exception.ToString());
+        }
         if (option is null) return options;
         
         if(options is IList<FloatMenuOption> { IsReadOnly: false } list)
