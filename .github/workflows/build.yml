@@ -32,3 +32,10 @@ jobs:
             Exit $LastExitCode 
           } 
         }
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: build/
+        if-no-files-found: error

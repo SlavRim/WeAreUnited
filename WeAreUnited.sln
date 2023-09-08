@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Solution Elements", "{5E40AB58-070A-466D-B2E7-687C9FA2A193}"
 	ProjectSection(SolutionItems) = preProject
 		Shared.mod.props.csproj = Shared.mod.props.csproj
+		.github\workflows\automerge.yml = .github\workflows\automerge.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeAreUnited", "WeAreUnited.csproj", "{EBB83B6C-1A7D-4247-980D-379514F94770}"
