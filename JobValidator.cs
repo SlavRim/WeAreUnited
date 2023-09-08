@@ -66,22 +66,26 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
 
     public bool Reservable => Recruiter.CanReserve(Target, ignoreOtherReservations: true);
 
-    public bool Related => Recruiter.relations.RelatedPawns.Contains(Target);
+    public bool Related => Recruiter.relations?.RelatedPawns.Contains(Target) ?? false;
 
     public static Result Validate(Pawn? recruiter, Pawn? target)
     {
         if (!IsValid(recruiter) || !IsValid(target)) 
             return false;
         
-        var validator = new JobValidator(recruiter, target);
+        var validator = new JobValidator(recruiter!, target!);
         
         return validator.Validate();
     }
     
-    public static Job? TryGetJob(Pawn? pawn, Thing? thing)
+    public static Job? TryMakeJob(Pawn? recruiter, Thing? thing)
     {
-        if (!Validate(pawn, thing as Pawn)) return null;
+        var target = thing as Pawn;
+        if (!Validate(recruiter, target)) return null;
         
-        return JobMaker.MakeJob(Definitions.AskPawnToUnite, thing);
+        return MakeJob(target!);
     }
+
+    private static Job MakeJob(Pawn target) => 
+        JobMaker.MakeJob(Definitions.AskPawnToUnite, target);
 }

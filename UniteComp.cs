@@ -20,7 +20,7 @@ public class UniteComp : ThingComp
     {
         JobFailReason.Clear();
         
-        var job = JobValidator.TryGetJob(pawn, target);
+        var job = JobValidator.TryMakeJob(pawn, target);
 
         void OptionAction()
         {
