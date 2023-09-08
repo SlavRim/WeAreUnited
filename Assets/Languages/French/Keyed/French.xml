@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Demander de vous rejoindre</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Demander de vous rejoindre</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Demandé trop récemment</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>demander</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} a refusé de vous rejoindre.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Peu convaincant\n{0} chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} a été convaincu(e) de vous rejoindre.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Convaincant\n{0} chance</WeAreUnited_SucceededMote>
+</LanguageData>
