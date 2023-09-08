@@ -111,6 +111,10 @@
 		<DebugType>full</DebugType>
 		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Debug)' == ''">
+		<Debug>false</Debug>
+	</PropertyGroup>
 
 	<!-- Configure for OS -->
 	<Choose>
@@ -263,18 +267,21 @@
 	</Target>
 
 	<!-- Post build, copy all new files and try copy build -->
-	<Target Condition="!$(BatchBuild)" Name="postbuild" AfterTargets="PostBuildEvent">
-		<Exec Command="rmdir /S /Q &quot;$(ModOutputAssembliesPath)&quot;" />
-
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(AssetsDir)&quot; &quot;$(ModOutputPath)&quot;" />
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(OutputPath)&quot; &quot;$(ModOutputAssembliesPath)&quot;" />
-
-		<CallTarget Targets="CopyBuild" Condition="Exists('$(GameModsPath)')"/>
+	<Target Name="postbuild" AfterTargets="PostBuildEvent">
+		<CallTarget Targets="CopyBuild" Condition="($(BatchBuild) and !$(Debug)) or (!$(BatchBuild))"/>
+		<CallTarget Targets="CopyBuildToGame" Condition="!$(BatchBuild) and Exists('$(GameModsPath)')"/>
 		<Message Importance="high" Text="Unable to copy build to the game mods, please change path to the game(&lt;GameDir&gt;$(GameDir)&lt;/GameDir&gt;)." Condition="!Exists('$(GameModsPath)')"/>
 	</Target>
 
 	<Target Name="CopyBuild">
 		<MakeDir Directories="$(ModOutputPath)" />
+		
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(AssetsDir)&quot; &quot;$(ModOutputPath)&quot;" />
+		<Exec Command="rmdir /S /Q &quot;$(ModOutputAssembliesPath)&quot;" />
+		<Exec Command="xcopy /Y /R /S /D /I &quot;$(OutputPath)&quot; &quot;$(ModOutputAssembliesPath)&quot;" />
+	</Target>
+
+	<Target Name="CopyBuildToGame">
 		<Exec Command="rmdir /S /Q &quot;$(GameModAssembliesPath)&quot;" />
 
 		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputAssembliesPath)&quot; &quot;$(GameModAssembliesPath)&quot;" />
