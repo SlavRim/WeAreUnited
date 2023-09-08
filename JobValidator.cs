@@ -5,7 +5,10 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
     private static bool IsValid(Pawn? pawn) => pawn is
     {
         Downed: false, 
-        Dead: false, 
+        Dead: false,
+#if v1_4
+        RaceProps.IsMechanoid: false,
+#endif
         RaceProps.Humanlike: true
     };
 
