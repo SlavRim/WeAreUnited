@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Demander à reunir</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Demander à s'unir</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>a essayé trop récemment</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>demander</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} a décliné de s'unir.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Raté\n{0} chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} a été convaincu de s'unir.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Persuedé\n{0} chance</WeAreUnited_SucceededMote>
+</LanguageData>
