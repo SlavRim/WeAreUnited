@@ -17,12 +17,24 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
 
     public static bool IsColonist(Pawn pawn, out Faction? faction) =>
         (faction = pawn.HomeFaction) is { IsPlayer: true };
+
+    public static bool IsCurrentlyColonist(Pawn pawn, out Faction? faction) =>
+        (faction = pawn.Faction) is { IsPlayer: true };
     
     public Result Validate()
     {
         if (!IsColonist(Recruiter, out var recruiterFaction) ||
             IsColonist(Target, out var targetFaction))
             return false;
+
+        if (Recruiter.IsSlave) // not sure if it ever will be true
+            return false;
+
+        if (!IsCurrentlyColonist(Target, out _))
+        {
+            if(Target.IsSlave)
+                return false;
+        }
         
         if (!Related)
         {
