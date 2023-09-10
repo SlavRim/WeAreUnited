@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Peça para se reunir</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Peça para se unir</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Tentei muito recentemente</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>Peça</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} recusou-se a se unir.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Não convincente\n{0} de chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} foi convencido(a).</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Convincente\n{0} de chance</WeAreUnited_SucceededMote>
+</LanguageData>
