@@ -10,7 +10,11 @@ public sealed partial class ModSettings : Verse.ModSettings
 #if v1_4
             AllowLoyal,
 #endif
-            MinDistanceFromEnemy
+            MinDistanceFromEnemy,
+            
+            RelationsMultiplier,
+            SkillMultiplier,
+            OpinionMultiplier
         }).AsReadOnly();
     }
     
@@ -18,7 +22,10 @@ public sealed partial class ModSettings : Verse.ModSettings
         AllowNotRelated = new(nameof(AllowNotRelated), "Allow not related", true),
         AllowLoyal = new(nameof(AllowLoyal), "Allow unwavering loyal", false);
     public Numeric<float> 
-        MinDistanceFromEnemy = new(nameof(MinDistanceFromEnemy), "Minimum distance from enemy", DefaultValue: 40f);
+        MinDistanceFromEnemy = new(nameof(MinDistanceFromEnemy), "Minimum distance from enemy", DefaultValue: 40f),
+        RelationsMultiplier = new(nameof(RelationsMultiplier), "Relations multiplier", DefaultValue: 0.25f),
+        SkillMultiplier = new(nameof(SkillMultiplier), "Skill multiplier", DefaultValue: 0.5f),
+        OpinionMultiplier = new(nameof(OpinionMultiplier), "Opinion multiplier", DefaultValue: 0.5f);
     
     public void Draw(IElement element) => Draw(element, null);
 

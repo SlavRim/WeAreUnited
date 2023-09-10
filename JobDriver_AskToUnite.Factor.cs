@@ -16,15 +16,15 @@ partial class JobDriver_AskToUnite
     public virtual float GetRelationFactor(PawnRelationDef relation) =>
         relation.importance / MaxImportance;
     
-    public virtual float RelationsMultiplier => 0.25f;
+    public virtual float RelationsMultiplier => Settings.RelationsMultiplier;
     public virtual float RelationsFactor => 
         Target.GetRelations(Actor).Sum(GetRelationFactor) * RelationsMultiplier;
 
-    public virtual float OpinionMultiplier => 0.5f;
+    public virtual float OpinionMultiplier => Settings.OpinionMultiplier;
     public virtual float OpinionFactor => 
         Target.relations.OpinionOf(Actor) / MaxOpinion * OpinionMultiplier;
 
-    public virtual float SkillMultiplier => 0.5f;
+    public virtual float SkillMultiplier => Settings.SkillMultiplier;
     public virtual float SkillFactor => 
         Actor.skills.GetSkill(SkillDefOf.Social).Level / MaxSkillLevel * SkillMultiplier;
 
