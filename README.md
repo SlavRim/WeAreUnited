@@ -40,3 +40,5 @@ This mod is friendly solution for reunion, faction will not consider reunion as 
 
 - English
 - Russian
+- French
+- Portuguese Brazilian
