@@ -9,12 +9,12 @@ partial class ModSettings
 
         public override void Draw(Rect rect)
         {
-            Widgets.CheckboxLabeled(rect, Label, ref Value, placeCheckboxNearText: true);
+            Widgets.CheckboxLabeled(rect, Label, ref value, placeCheckboxNearText: true);
         }
         
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref Value, Name, defaultValue: DefaultValue);
+            Scribe_Values.Look(ref value, Name, defaultValue: DefaultValue);
         }
     }
 }

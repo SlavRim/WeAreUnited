@@ -13,8 +13,6 @@ public sealed partial class ModSettings : Verse.ModSettings
             MinDistanceFromEnemy
         }).AsReadOnly();
     }
-
-    public readonly Listing_Standard Layout = new();
     
     public Toggle 
         AllowNotRelated = new(nameof(AllowNotRelated), "Allow not related", true),

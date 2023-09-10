@@ -29,14 +29,14 @@ partial class ModSettings
             
             Widgets.LabelFit(Layout.GetRect(LabelHeight), Label);
             rect = Layout.GetRect(FieldHeight, WidthFactor);
-            Widgets.TextFieldNumeric(rect, ref Value, ref Buffer, Minimum, Maximum);
+            Widgets.TextFieldNumeric(rect, ref value, ref Buffer, Minimum, Maximum);
             
             Layout.End();
         }
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref Value, Name, defaultValue: DefaultValue);
+            Scribe_Values.Look(ref value, Name, defaultValue: DefaultValue);
         }
     }
 }
