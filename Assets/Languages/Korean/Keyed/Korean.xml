@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>재결합을 요청</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>함께 살자는 제안</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>최근에 이미 시도함</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>제안하다</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0}은(는) 같이 살길 원치 않음</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>{0}의 확률로 설득력 부족</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0}을(를) 설득 시도함</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>{0}의 확률로 설득 성공함</WeAreUnited_SucceededMote>
+</LanguageData>
