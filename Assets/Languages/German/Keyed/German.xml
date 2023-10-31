@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Fragen, sich wiederzuvereinigen</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Fragen, sich zu vereinigen</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Vor zu kurzer Zeit versucht</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>fragen</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} hat die Vereinigung abgelehnt.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Nicht überzeugt\n{0} Chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} wurde überzeugt.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Überzeugt\n{0} Chance</WeAreUnited_SucceededMote>
+</LanguageData>

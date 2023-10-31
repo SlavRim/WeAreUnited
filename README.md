@@ -39,7 +39,8 @@ This mod is friendly solution for reunion, faction will not consider reunion as 
 ### Supported languages:
 
 - English
-- Russian
 - French
+- German
 - Korean
 - Portuguese Brazilian
+- Russian
