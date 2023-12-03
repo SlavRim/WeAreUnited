@@ -4,7 +4,7 @@
 	<WeAreUnited_TooRecently>Se ha intentado recientemente</WeAreUnited_TooRecently>
 	<WeAreUnited_Verb>pedir</WeAreUnited_Verb>
 	<WeAreUnited_FailedMessage>{0} rechazó unirse.</WeAreUnited_FailedMessage>
-	<WeAreUnited_FailedMote>Probabilidad de que\nrechace unirse:{0}</WeAreUnited_FailedMote>
+	<WeAreUnited_FailedMote>Probabilidad de que\nrechazara unirse: {0}</WeAreUnited_FailedMote>
 	<WeAreUnited_SucceededMessage>{0} ha decidido unirse.</WeAreUnited_SucceededMessage>
-	<WeAreUnited_SucceededMote>Probabilidad de que\nacepte unirse:{0}</WeAreUnited_SucceededMote>
+	<WeAreUnited_SucceededMote>Probabilidad de que\naceptara unirse: {0}</WeAreUnited_SucceededMote>
 </LanguageData>
