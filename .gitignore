@@ -21,6 +21,7 @@
 mono_crash.*
 
 # Build results
+/Assets/**/Assemblies
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
