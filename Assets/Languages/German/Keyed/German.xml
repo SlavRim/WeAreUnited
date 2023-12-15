@@ -1,0 +1,10 @@
+﻿<LanguageData>
+	<WeAreUnited_FloatMenu>Um Wiedervereinigung bitten</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Um Vereinigung bitten</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Kürzlich versucht</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>Fragen</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} lehnte es ab, beizutraten.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Nichtüberzeugen\n{0} Chance</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} wurde überzeugt.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Überzeugen\n{0} Chance</WeAreUnited_SucceededMote>
+</LanguageData>
