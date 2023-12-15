@@ -1,4 +1,7 @@
-﻿namespace WeAreUnited;
+﻿using RimWorld.Planet;
+using Verse.AI.Group;
+
+namespace WeAreUnited;
 
 public partial class JobDriver_AskToUnite : JobDriver
 {
@@ -45,7 +48,22 @@ public partial class JobDriver_AskToUnite : JobDriver
         NotifySucceeded(chance);
     }
 
-    public virtual void Recruit() => InteractionWorker_RecruitAttempt.DoRecruit(Actor, Target);
+    public virtual void Recruit()
+    {
+        var target = Target;
+        if (target.GetCaravan() is { } caravan)
+        {
+            target.GetLord()?.Notify_PawnLost(target, PawnLostCondition.LeftVoluntarily);
+            caravan.RemovePawn(target);
+        }
+
+        if (target.roping is { } rope)
+        {
+            rope.DropRopes();
+        }
+        
+        InteractionWorker_RecruitAttempt.DoRecruit(Actor, target);
+    } 
 
     public virtual void ForceTargetToWait() => PawnUtility.ForceWait(Target, WaitTicks, Actor);
 

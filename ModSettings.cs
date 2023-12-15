@@ -6,6 +6,7 @@ public sealed partial class ModSettings : Verse.ModSettings
     {
         Elements = (elements = new()
         {
+            ValidateCapability,
             AllowNotRelated,
 #if v1_4
             AllowLoyal,
@@ -19,6 +20,7 @@ public sealed partial class ModSettings : Verse.ModSettings
     }
     
     public Toggle 
+        ValidateCapability = new(nameof(ValidateCapability), "Talking capability required", true),
         AllowNotRelated = new(nameof(AllowNotRelated), "Allow not related", true),
         AllowLoyal = new(nameof(AllowLoyal), "Allow unwavering loyal", false);
     public Numeric<float> 
