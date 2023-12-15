@@ -111,10 +111,6 @@
 		<DebugType>full</DebugType>
 		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Debug)' == ''">
-		<Debug>false</Debug>
-	</PropertyGroup>
 
 	<!-- Configure for OS -->
 	<Choose>
@@ -165,7 +161,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<ModOutputPath>$(ModBuildDir)$(ModName)\</ModOutputPath>
+		<ModOutputPath>$(AssetsDir)</ModOutputPath>
 		<!-- build\ModName\ -->
 
 		<GameVersion>$(Configuration.Replace('_DEBUG', ''))</GameVersion>
@@ -242,17 +238,14 @@
 
 	<!-- Hide build directory -->
 	<ItemGroup>
-		<Compile Remove="$(ModBuildDir)**" />
-		<EmbeddedResource Remove="$(ModBuildDir)**" />
-		<None Remove="$(ModBuildDir)**" />
+		<Compile Remove="$(AssetsDir)**/Assemblies/**" />
+		<EmbeddedResource Remove="$(AssetsDir)**/Assemblies/**" />
+		<None Remove="$(AssetsDir)**/Assemblies/**" />
 	</ItemGroup>
 
 	<!-- Cleaning -->
 	<Target Name="cleanup" AfterTargets="BeforeClean">
-		<Exec Command="rmdir /S /Q &quot;$(BaseIntermediateOutputPath)&quot;" />
-		<Exec Command="rmdir /S /Q &quot;$(BaseOutputPath)&quot;" />
-		<Exec Command="rmdir /S /Q &quot;$(ModBuildDir)&quot;" />
-		<Exec Command="rmdir /S /Q &quot;$(GameModPath)&quot;" />
+		<Exec Command="rd &quot;$(GameModPath)&quot;" IgnoreExitCode="true" />
 	</Target>
 
 	<!-- https://stackoverflow.com/a/5514808 - Batch Build/Restore -->
@@ -266,26 +259,21 @@
 		<Message Text="Building $(ModName) with configuration $(Configuration) >" Importance="high" />
 	</Target>
 
-	<!-- Post build, copy all new files and try copy build -->
 	<Target Name="postbuild" AfterTargets="PostBuildEvent">
-		<CallTarget Targets="CopyBuild" Condition="($(BatchBuild) and !$(Debug)) or (!$(BatchBuild))"/>
-		<CallTarget Targets="CopyBuildToGame" Condition="!$(BatchBuild) and Exists('$(GameModsPath)')"/>
-		<Message Importance="high" Text="Unable to copy build to the game mods, please change path to the game(&lt;GameDir&gt;$(GameDir)&lt;/GameDir&gt;)." Condition="!Exists('$(GameModsPath)')"/>
-	</Target>
 
-	<Target Name="CopyBuild">
-		<MakeDir Directories="$(ModOutputPath)" />
-		
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(AssetsDir)&quot; &quot;$(ModOutputPath)&quot;" />
-		<Exec Command="rmdir /S /Q &quot;$(ModOutputAssembliesPath)&quot;" />
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(OutputPath)&quot; &quot;$(ModOutputAssembliesPath)&quot;" />
-	</Target>
+		<Message Importance="high" Text="Unable to copy build to the game mods, please change path to the game(&lt;GameDir&gt;$(GameDir)&lt;/GameDir&gt;)."
+				 Condition="!Exists('$(GameModsPath)')" IsCritical="true" />
 
-	<Target Name="CopyBuildToGame">
-		<Exec Command="rmdir /S /Q &quot;$(GameModAssembliesPath)&quot;" />
+		<MakeDir Directories="$(ProjectDir)$(ModOutputVersionPath)" ContinueOnError="true" />
 
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputAssembliesPath)&quot; &quot;$(GameModAssembliesPath)&quot;" />
-		<Exec Command="xcopy /Y /R /S /D /I &quot;$(ModOutputPath)&quot; &quot;$(GameModPath)&quot;" />
+		<Exec Command="rd &quot;$(ProjectDir)$(ModOutputAssembliesPath)&quot;" IgnoreExitCode="true" />
+		<Exec Command="mklink /D &quot;$(ProjectDir)$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
+			  IgnoreExitCode="true" />
+
+		<Exec Command="rd &quot;$(GameModPath)&quot;" IgnoreExitCode="true" />
+		<Exec Command="mklink /D &quot;$(GameModPath)&quot; &quot;$(ProjectDir)$(AssetsDir)&quot;"
+			  IgnoreExitCode="true" />
+
 	</Target>
 
 	<!-- Global usings -->
