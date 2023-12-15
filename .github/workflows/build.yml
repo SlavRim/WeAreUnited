@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: | 
-          7.0.x
+          8.0.x
     
     - name: Build
       run: |
@@ -37,5 +37,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build
-        path: build/
+        path: Assets/
         if-no-files-found: error
