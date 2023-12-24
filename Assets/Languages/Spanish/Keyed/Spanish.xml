@@ -1,0 +1,10 @@
+<LanguageData>
+	<WeAreUnited_FloatMenu>Pedir que vuelva a la colonia</WeAreUnited_FloatMenu>
+	<WeAreUnited_FloatMenu_NotRelated>Pedir que se una</WeAreUnited_FloatMenu_NotRelated>
+	<WeAreUnited_TooRecently>Se ha pedido hace poco</WeAreUnited_TooRecently>
+	<WeAreUnited_Verb>Pedir</WeAreUnited_Verb>
+	<WeAreUnited_FailedMessage>{0} ha rechazado unirse.</WeAreUnited_FailedMessage>
+	<WeAreUnited_FailedMote>Probabilidad de que\nrechazara unirse: {0}</WeAreUnited_FailedMote>
+	<WeAreUnited_SucceededMessage>{0} ha decidido unirse.</WeAreUnited_SucceededMessage>
+	<WeAreUnited_SucceededMote>Probabilidad de que\naceptara unirse: {0}</WeAreUnited_SucceededMote>
+</LanguageData>
