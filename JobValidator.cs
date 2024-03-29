@@ -13,8 +13,9 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
     };
 
     public static bool ValidateCapable(Pawn pawn) =>
-        (!Settings.ValidateCapability) ||
-        pawn.IsCapableOf_WithFailReason(PawnCapacityDefOf.Talking);
+        (!Settings.ValidateCapability) || (
+        pawn.IsCapableOf_WithFailReason(PawnCapacityDefOf.Talking) &&
+        pawn.IsSocialWorkEnabled_WithFailReason());
 
     public static bool IsColonist(Pawn pawn, out Faction? faction) =>
         (faction = pawn.HomeFaction) is { IsPlayer: true };
