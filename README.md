@@ -1,6 +1,6 @@
 # Unite with others, together We Are United!
 
-"We Are United" formerly "Family Reunion" - allows you to recruit pawns who is related to your colonist or has no home.
+"We Are United" formerly "Family Reunion" - allows you to recruit pawns who are related to your colonist or has no home.
 
 ### Usage:
 
