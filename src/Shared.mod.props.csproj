@@ -250,7 +250,7 @@
 		<MakeDir Directories="$(ModOutputVersionPath)" ContinueOnError="true" />
 
 		<RemoveDir Directories="$(ModOutputAssembliesPath)" ContinueOnError="true" />
-		<Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$(OutputPath)&quot;"
+		<Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
 			  IgnoreExitCode="true" />
 
 		<RemoveDir Directories="$(GameModPath)" ContinueOnError="true" />
