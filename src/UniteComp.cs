@@ -27,18 +27,21 @@ public class UniteComp : ThingComp
     public static FloatMenuOption? GetMenuOption(Pawn? pawn, Pawn? target)
     {
         JobFailReason.Clear();
+
+        if (pawn is null || target is null)
+            return null;
         
         var job = JobValidator.TryMakeJob(pawn, target);
 
         void OptionAction()
         {
             if (job is null) return;
-            pawn?.jobs?.TryTakeOrderedJob(job, JobTag.Misc);
+            pawn.jobs?.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
         var translation = Translations.FloatMenu_NotRelated;
 
-        if (target is { relations: { } relations })
+        if (target.relations is { } relations)
             if (relations.RelatedPawns.Contains(pawn))
                 translation = Translations.FloatMenu;
         

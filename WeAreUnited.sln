@@ -5,12 +5,15 @@ VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Solution Elements", "{5E40AB58-070A-466D-B2E7-687C9FA2A193}"
 	ProjectSection(SolutionItems) = preProject
-		Shared.mod.props.csproj = Shared.mod.props.csproj
-		.github\workflows\automerge.yml = .github\workflows\automerge.yml
-		.github\workflows\build.yml = .github\workflows\build.yml
+		src\Shared.mod.props.csproj = src\Shared.mod.props.csproj
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		build.bat = build.bat
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeAreUnited", "WeAreUnited.csproj", "{EBB83B6C-1A7D-4247-980D-379514F94770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeAreUnited", "src\WeAreUnited.csproj", "{EBB83B6C-1A7D-4247-980D-379514F94770}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +21,8 @@ Global
 		1.3|Any CPU = 1.3|Any CPU
 		1.4_DEBUG|Any CPU = 1.4_DEBUG|Any CPU
 		1.4|Any CPU = 1.4|Any CPU
+		1.5_DEBUG|Any CPU = 1.5_DEBUG|Any CPU
+		1.5|Any CPU = 1.5|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.3_DEBUG|Any CPU.ActiveCfg = 1.3_DEBUG|Any CPU
@@ -28,6 +33,10 @@ Global
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.4_DEBUG|Any CPU.Build.0 = 1.4_DEBUG|Any CPU
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.4|Any CPU.ActiveCfg = 1.4|Any CPU
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.4|Any CPU.Build.0 = 1.4|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5_DEBUG|Any CPU.ActiveCfg = 1.5_DEBUG|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5_DEBUG|Any CPU.Build.0 = 1.5_DEBUG|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5|Any CPU.ActiveCfg = 1.5|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5|Any CPU.Build.0 = 1.5|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
