@@ -1,52 +1,5 @@
 <Project>
 
-	<!-- Define if undefined -->
-	<PropertyGroup Condition="'$(Configurations)' == ''">
-		<Configurations>1.3_DEBUG;1.3;1.4_DEBUG;1.4</Configurations>
-	</PropertyGroup>
-
-	<ItemGroup Condition="'@(ConfigurationsList)' == ''">
-		<ConfigurationsList Include="$(Configurations.Split(';'))" />
-	</ItemGroup>
-
-	<PropertyGroup Condition="$(RootNamespace) == ''">
-		<RootNamespace>$(MSBuildProjectName.Replace(" ", "."))</RootNamespace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(AllowLocalAssemblies)' == ''">
-		<AllowLocalAssemblies>true</AllowLocalAssemblies>
-		<!-- Allow usage of local assemblies -->
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(BatchBuild)' == ''">
-		<BatchBuild>false</BatchBuild>
-	</PropertyGroup>
-
-	<!-- Setup environment -->
-	<PropertyGroup>
-		<OS64>$([System.Environment]::Is64BitOperatingSystem)</OS64>
-	</PropertyGroup>
-
-	<Choose>
-		<When Condition="'$([System.Environment]::OSVersion.Platform)' == 'Unix'">
-			<PropertyGroup>
-				<Linux>true</Linux>
-			</PropertyGroup>
-		</When>
-		<When Condition="'$([System.Environment]::OSVersion.Platform)' == 'MacOSX'">
-			<PropertyGroup>
-				<MacOS>true</MacOS>
-			</PropertyGroup>
-		</When>
-		<Otherwise>
-			<PropertyGroup>
-				<Linux>false</Linux>
-				<MacOS>false</MacOS>
-			</PropertyGroup>
-		</Otherwise>
-	</Choose>
-
-
 	<!-- Setup project properties -->
 
 	<PropertyGroup Condition="'$(TargetFramework)' == ''">
@@ -65,6 +18,14 @@
 		<Nullable>annotations</Nullable>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(RootNamespace) == ''">
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "."))</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OS64>$([System.Environment]::Is64BitOperatingSystem)</OS64>
+	</PropertyGroup>
+	
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<EnablePreviewFeatures>true</EnablePreviewFeatures>
@@ -77,33 +38,78 @@
 		<RunPostBuildEvent>Always</RunPostBuildEvent>
 		<RunPreBuildEvent>Always</RunPreBuildEvent>
 	</PropertyGroup>
+	
+	<!-- Define if undefined -->
+	<PropertyGroup Condition="'$(Configurations)' == ''">
+		<Configurations>1.3_DEBUG;1.3;1.4_DEBUG;1.4;1.5_DEBUG;1.5</Configurations>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ConfigurationsList Include="$(Configurations.Split(';'))" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<GameVersions Include="@(ConfigurationsList)" Exclude="@(ConfigurationsList->Contains('_DEBUG')" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(AllowLocalAssemblies)' == ''">
+		<AllowLocalAssemblies>true</AllowLocalAssemblies>
+		<!-- Allow usage of local assemblies -->
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(BatchBuild)' == ''">
+		<BatchBuild>false</BatchBuild>
+	</PropertyGroup>
 
 	<!-- Setup versions properties -->
-	<PropertyGroup>
-		<v1_3>$(Configuration.StartsWith('1.3'))</v1_3>
-		<v1_4>$(Configuration.StartsWith('1.4'))</v1_4>
-	</PropertyGroup>
+	<Choose>
+		<When Condition="'$(Configuration)' != '' and '$(GameVersion)' == ''">
+			<PropertyGroup>
+				<GameVersion>$(Configuration.Replace('_DEBUG', ''))</GameVersion>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<GameVersion>1.5</GameVersion>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
 
 	<!-- Configure for versions -->
 
 	<!-- !CHANGE TO YOUR LOCATIONS! -->
 	<Choose>
 		<When Condition="'$(RefGameDir)' == ''">
-			<PropertyGroup>
+			<PropertyGroup Condition="'$(GameVersion)' == '1.3'">
 				<RefGameDir>D:\Steam\steamapps\common\RimWorld 1.3\</RefGameDir>
 			</PropertyGroup>
-			<PropertyGroup Condition="$(v1_4)">
+			<PropertyGroup Condition="'$(GameVersion)' == '1.4'">
+				<RefGameDir>D:\Steam\steamapps\common\RimWorld 1.4\</RefGameDir>
+			</PropertyGroup>
+			<PropertyGroup Condition="'$(GameVersion)' == '1.5'">
 				<RefGameDir>D:\Steam\steamapps\common\RimWorld\</RefGameDir>
 			</PropertyGroup>
 		</When>
 	</Choose>
+	<!-- !CHANGE TO YOUR LOCATIONS! -->
+	<Choose>
+		<When Condition="'$(GameDir)' == ''">
+			<PropertyGroup Condition="'$(GameVersion)' == '1.3'">
+				<GameDir>D:\Steam\steamapps\common\RimWorld 1.3\</GameDir>
+			</PropertyGroup>
+			<PropertyGroup Condition="'$(GameVersion)' == '1.4'">
+				<GameDir>D:\Steam\steamapps\common\RimWorld 1.4\</GameDir>
+			</PropertyGroup>
+			<PropertyGroup Condition="'$(GameVersion)' == '1.5'">
+				<GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
+			</PropertyGroup>
+		</When>
+	</Choose>
+	<!-- !CHANGE TO YOUR LOCATIONS! -->
 
-	<PropertyGroup Condition="$(v1_3)">
-		<DefineConstants>$(DefineConstants);v1_3</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(v1_4)">
-		<DefineConstants>$(DefineConstants);v1_4</DefineConstants>
+	<PropertyGroup>
+		<GameVersionConstant>v$(GameVersion.Replace('.', '_'))</GameVersionConstant>
+		<DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(Configuration.EndsWith('DEBUG'))">
@@ -112,20 +118,9 @@
 		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
 
-	<!-- Configure for OS -->
 	<Choose>
 		<When Condition="'$(GameDataDir)' == ''">
 			<Choose>
-				<When Condition="$(Linux)">
-					<PropertyGroup>
-						<GameDataDir>$(RefGameDir)RimWorldLinux_Data\</GameDataDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(MacOS)">
-					<PropertyGroup>
-						<GameDataDir>$(RefGameDir)Contents\Resources\Data\</GameDataDir>
-					</PropertyGroup>
-				</When>
 				<When Condition="$(OS64)">
 					<PropertyGroup>
 						<GameDataDir>$(RefGameDir)RimWorldWin64_Data\</GameDataDir>
@@ -137,16 +132,11 @@
 					</PropertyGroup>
 				</Otherwise>
 			</Choose>
-
 		</When>
 	</Choose>
+	
 
 	<!-- Setup mod properties -->
-
-	<!-- !CHANGE TO YOUR LOCATIONS! -->
-	<PropertyGroup Condition="'$(GameDir)' == ''">
-		<GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
-	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(ModName)' == ''">
 		<ModName>$(AssemblyName)</ModName>
@@ -157,15 +147,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(AssetsDir)' == ''">
-		<AssetsDir>$(ProjectDir)Assets\</AssetsDir>
+		<AssetsDir>$(SolutionDir)Assets\</AssetsDir>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<ModOutputPath>$(AssetsDir)</ModOutputPath>
 		<!-- build\ModName\ -->
-
-		<GameVersion>$(Configuration.Replace('_DEBUG', ''))</GameVersion>
-		<!-- Mod version (1.3..1.4) -->
+		
 		<ModOutputVersionPath>$(ModOutputPath)$(GameVersion)\</ModOutputVersionPath>
 		<!-- build\ModName\(1.3..1.4)\ -->
 
@@ -222,10 +210,7 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.*-*" ExcludeAssets="runtime" />
-			</ItemGroup>
-			<ItemGroup Condition="$(v1_4)">
-				<PackageReference Update="Krafs.Rimworld.Ref" Version="1.4.*-*" />
+				<PackageReference Include="Krafs.Rimworld.Ref" Version="$(GameVersion).*-*" ExcludeAssets="runtime"  />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>
@@ -245,18 +230,19 @@
 
 	<!-- Cleaning -->
 	<Target Name="cleanup" AfterTargets="BeforeClean">
-		<Exec Command="rd &quot;$(GameModPath)&quot;" IgnoreExitCode="true" />
+		<RemoveDir Directories="$(GameModPath)" ContinueOnError="true" />
 	</Target>
 
 	<!-- https://stackoverflow.com/a/5514808 - Batch Build/Restore -->
 
 	<Target Name="BatchBuild">
-		<Exec Command="dotnet build &quot;$(ProjectPath)&quot; -c %(ConfigurationsList.Identity) -p:BatchBuild=true -restore -v n" />
+		<Exec Command="dotnet build &quot;$(ProjectPath)&quot; -c %(GameVersions.Identity) -p:BatchBuild=true -restore -v n" />
 	</Target>
 
 	<!-- Pre build, message about it -->
 	<Target Name="prebuild" AfterTargets="PreBuildEvent">
 		<Message Text="Building $(ModName) with configuration $(Configuration) >" Importance="high" />
+		<Message Text="$(GameAssembliesDir)" Importance="high" />
 	</Target>
 
 	<Target Name="postbuild" AfterTargets="PostBuildEvent">
@@ -264,14 +250,14 @@
 		<Message Importance="high" Text="Unable to copy build to the game mods, please change path to the game(&lt;GameDir&gt;$(GameDir)&lt;/GameDir&gt;)."
 				 Condition="!Exists('$(GameModsPath)')" IsCritical="true" />
 
-		<MakeDir Directories="$(ProjectDir)$(ModOutputVersionPath)" ContinueOnError="true" />
+		<MakeDir Directories="$(ModOutputVersionPath)" ContinueOnError="true" />
 
-		<Exec Command="rd &quot;$(ProjectDir)$(ModOutputAssembliesPath)&quot;" IgnoreExitCode="true" />
-		<Exec Command="mklink /D &quot;$(ProjectDir)$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
+		<RemoveDir Directories="$(ProjectDir)$(ModOutputAssembliesPath)" ContinueOnError="true" />
+		<Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
 			  IgnoreExitCode="true" />
 
-		<Exec Command="rd &quot;$(GameModPath)&quot;" IgnoreExitCode="true" />
-		<Exec Command="mklink /D &quot;$(GameModPath)&quot; &quot;$(ProjectDir)$(AssetsDir)&quot;"
+		<RemoveDir Directories="$(GameModPath)" ContinueOnError="true" />
+		<Exec Command="mklink /D &quot;$(GameModPath)&quot; &quot;$(AssetsDir)&quot;"
 			  IgnoreExitCode="true" />
 
 	</Target>
