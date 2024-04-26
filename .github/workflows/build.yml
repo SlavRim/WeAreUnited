@@ -13,28 +13,22 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GH_PAT }}
         submodules: recursive
 
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: | 
           8.0.x
     
     - name: Build
-      run: |
-        Get-ChildItem . -Filter *.sln | Foreach-Object { 
-          dotnet build $_.FullName /t:BatchBuild -v n
-          if($SuccessCodes -notcontains $LastExitCode) {
-            Exit $LastExitCode 
-          } 
-        }
+      run: ./build.bat
         
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build
         path: Assets/
