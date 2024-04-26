@@ -27,10 +27,23 @@ public static partial class Extensions
         if (pawn.IsCapableOf(capacity))
             return true;
 
+        FailIncapable(pawn, capacity);
+        return false;
+    }
+
+    public static bool IsSocialWorkEnabled_WithFailReason(this Pawn pawn)
+    {
+        if (!pawn.WorkTagIsDisabled(WorkTags.Social))
+            return true;
+
+        FailIncapable(pawn, PawnCapacityDefOf.Talking);
+        return false;
+    }
+
+    public static void FailIncapable(Pawn pawn, PawnCapacityDef capacity)
+    {
         var reason = GetIncapableReason(pawn, capacity);
         JobFailReason.Is(reason);
-
-        return false;
     }
 
     public static string GetIncapableReason(this Pawn pawn, PawnCapacityDef capacity) =>
