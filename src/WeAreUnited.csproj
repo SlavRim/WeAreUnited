@@ -5,7 +5,7 @@
 	</PropertyGroup>
 	
 	<PropertyGroup>
-		<ModSharedProps>$(ProjectDir)Shared.mod.props.csproj</ModSharedProps>
+		<ModSharedProps>$(SolutionDir)Shared/Mod.props.csproj</ModSharedProps>
 	</PropertyGroup>
 	
 	<Import Project="$(ModSharedProps)" />
