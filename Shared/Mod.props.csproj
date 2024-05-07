@@ -1,0 +1,272 @@
+<Project>
+
+    <!-- Setup project properties -->
+
+    <PropertyGroup Condition="'$(TargetFramework)' == ''">
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(GenerateDocumentationFile)' == ''">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(LangVersion)' == ''">
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Nullable)' == ''">
+        <Nullable>annotations</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(RootNamespace) == ''">
+        <RootNamespace>$(MSBuildProjectName.Replace(" ", "."))</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OS64>$([System.Environment]::Is64BitOperatingSystem)</OS64>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <EnablePreviewFeatures>true</EnablePreviewFeatures>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <PackageOutputPath>$(ProjectDir)</PackageOutputPath>
+
+        <NoWarn>$(NoWarn);MSB3052;CS8618;CS8603</NoWarn>
+
+        <RunPostBuildEvent>Always</RunPostBuildEvent>
+        <RunPreBuildEvent>Always</RunPreBuildEvent>
+    </PropertyGroup>
+
+    <!-- Define if undefined -->
+    <PropertyGroup Condition="'$(Configurations)' == ''">
+        <Configurations>1.3_DEBUG;1.3;1.4_DEBUG;1.4;1.5_DEBUG;1.5</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ConfigurationsList Include="$(Configurations.Split(';'))"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <GameVersions Include="@(ConfigurationsList)" Exclude="@(ConfigurationsList->Contains('_DEBUG')"/>
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(AllowLocalAssemblies)' == ''">
+        <AllowLocalAssemblies>true</AllowLocalAssemblies>
+        <!-- Allow usage of local assemblies -->
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(BatchBuild)' == ''">
+        <BatchBuild>false</BatchBuild>
+    </PropertyGroup>
+
+    <!-- Setup versions properties -->
+    <Choose>
+        <When Condition="'$(Configuration)' != '' and '$(GameVersion)' == ''">
+            <PropertyGroup>
+                <GameVersion>$(Configuration.Replace('_DEBUG', ''))</GameVersion>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <GameVersion>1.5</GameVersion>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+
+    <!-- Configure for versions -->
+
+    <!-- !CHANGE TO YOUR LOCATIONS! -->
+    <Choose>
+        <When Condition="'$(RefGameDir)' == ''">
+            <PropertyGroup Condition="'$(GameVersion)' == '1.3'">
+                <RefGameDir>D:\Steam\steamapps\common\RimWorld 1.3\</RefGameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.4'">
+                <RefGameDir>D:\Steam\steamapps\common\RimWorld 1.4\</RefGameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.5'">
+                <RefGameDir>D:\Steam\steamapps\common\RimWorld\</RefGameDir>
+            </PropertyGroup>
+        </When>
+    </Choose>
+    <!-- !CHANGE TO YOUR LOCATIONS! -->
+    <Choose>
+        <When Condition="'$(GameDir)' == ''">
+            <PropertyGroup Condition="'$(GameVersion)' == '1.3'">
+                <GameDir>D:\Steam\steamapps\common\RimWorld 1.3\</GameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.4'">
+                <GameDir>D:\Steam\steamapps\common\RimWorld 1.4\</GameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.5'">
+                <GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
+            </PropertyGroup>
+        </When>
+    </Choose>
+    <!-- !CHANGE TO YOUR LOCATIONS! -->
+
+    <PropertyGroup>
+        <GameVersionConstant>v$(GameVersion.Replace('.', '_'))</GameVersionConstant>
+        <DefineConstants>$(DefineConstants);$(GameVersionConstant)</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.EndsWith('DEBUG'))">
+        <Debug>true</Debug>
+        <DebugType>full</DebugType>
+        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    </PropertyGroup>
+
+    <Choose>
+        <When Condition="'$(GameDataDir)' == ''">
+            <Choose>
+                <When Condition="$(OS64)">
+                    <PropertyGroup>
+                        <GameDataDir>$(RefGameDir)RimWorldWin64_Data\</GameDataDir>
+                    </PropertyGroup>
+                </When>
+                <Otherwise>
+                    <PropertyGroup>
+                        <GameDataDir>$(RefGameDir)RimWorldWin_Data\</GameDataDir>
+                    </PropertyGroup>
+                </Otherwise>
+            </Choose>
+        </When>
+    </Choose>
+
+
+    <!-- Setup mod properties -->
+
+    <PropertyGroup Condition="'$(ModName)' == ''">
+        <ModName>$(AssemblyName)</ModName>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(AssetsDir)' == ''">
+        <AssetsDir>$(ProjectDir)..\Assets\</AssetsDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <ModOutputPath>$(AssetsDir)</ModOutputPath>
+        <!-- Assets -->
+
+        <ModOutputVersionPath>$(ModOutputPath)$(GameVersion)\</ModOutputVersionPath>
+        <!-- Assets\(1.3..1.4)\ -->
+
+        <ModAssembliesPath>$(GameVersion)\Assemblies\</ModAssembliesPath>
+        <!-- (1.3..1.4)\Assemblies\ -->
+        <ModOutputAssembliesPath>$(ModOutputPath)$(ModAssembliesPath)</ModOutputAssembliesPath>
+        <!-- Assets\(1.3..1.4)\Assemblies\ -->
+    </PropertyGroup>
+
+    <!-- Finalize game properties -->
+    <PropertyGroup>
+        <GameAssembliesDir>$(GameDataDir)Managed\</GameAssembliesDir>
+        <!-- Game\Data\Managed\ -->
+        <GameModsPath>$(GameDir)Mods\</GameModsPath>
+        <!-- Game\Mods\ -->
+        <GameModPath>$(GameModsPath)$(ModName)\</GameModPath>
+        <!-- Game\Mods\ModName\ -->
+        <GameModVersion>$(GameModPath)$(GameVersion)\</GameModVersion>
+        <!-- Game\Mods\ModName\(1.3..1.4)\ -->
+        <GameModAssembliesPath>$(GameModPath)$(ModAssembliesPath)</GameModAssembliesPath>
+        <!-- Game\Mods\ModName\(1.3..1.4)\Assemblies\ -->
+    </PropertyGroup>
+
+    <!-- Configure publicizer -->
+    <PropertyGroup Condition="'$(PublicizerClearCacheOnClean)' == ''">
+        <PublicizerClearCacheOnClean>true</PublicizerClearCacheOnClean>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Publicize Include="$(Publicize);Assembly-CSharp"/>
+    </ItemGroup>
+
+    <!-- Add Krafs.Publicizer. Makes every member of choosen assemblies to be public, so you could use every member in your projects.  -->
+    <ItemGroup>
+        <PackageReference Include="Krafs.Publicizer" Version="2.2.0"/>
+    </ItemGroup>
+
+    <!-- Add PolySharp. Allows you to use almost every new CSharp feature in your projects. -->
+    <ItemGroup>
+        <PackageReference Include="PolySharp" Version="*"/>
+    </ItemGroup>
+
+    <!-- Add net references -->
+    <ItemGroup Condition="$(TargetFramework.ToLower.StartsWith('net4'))">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.$(TargetFramework)" Version="*" ExcludeAssets="runtime"/>
+    </ItemGroup>
+
+    <!-- Add game assemblies as references -->
+    <Choose>
+        <When Condition="$(AllowLocalAssemblies) and Exists('$(GameAssembliesDir)')">
+            <ItemGroup>
+                <Reference Include="$(GameAssembliesDir)*.dll" Private="false"/>
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <ItemGroup>
+                <PackageReference Include="Krafs.Rimworld.Ref" Version="$(GameVersion).*-*" ExcludeAssets="runtime"/>
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+
+
+    <!-- Check for updated Assets -->
+    <ItemGroup>
+        <UpToDateCheckInput Include="$(AssetsDir)**"/>
+    </ItemGroup>
+
+    <!-- Cleaning -->
+    <Target Name="cleanup" AfterTargets="BeforeClean">
+        <RemoveDir Directories="$(GameModPath)" ContinueOnError="true"/>
+    </Target>
+
+    <!-- https://stackoverflow.com/a/5514808 - Batch Build/Restore -->
+
+    <Target Name="BatchBuild">
+        <Exec Command="dotnet build &quot;$(SolutionPath)&quot; -c %(GameVersions.Identity) -p:BatchBuild=true -restore -v n"/>
+    </Target>
+
+    <!-- Pre build, message about it -->
+    <Target Name="prebuild" AfterTargets="PreBuildEvent">
+        <Message Text="Building $(ModName) with configuration $(Configuration) >" Importance="high"/>
+        <Message Text="Assemblies at: $(ModOutputAssembliesPath)" Importance="high"/>
+        <Message Text="Game mod at: $(GameModPath)" Importance="high"/>
+    </Target>
+
+    <Target Name="postbuild" AfterTargets="PostBuildEvent">
+
+        <Message Importance="high" Text="Unable to copy build to the game mods, please change path to the game(&lt;GameDir&gt;$(GameDir)&lt;/GameDir&gt;)."
+                 Condition="!Exists('$(GameModsPath)')" IsCritical="true"/>
+
+        <MakeDir Directories="$(ModOutputVersionPath)" ContinueOnError="true"/>
+
+        <RemoveDir Directories="$(ModOutputAssembliesPath)" ContinueOnError="true"/>
+        <Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
+              IgnoreExitCode="true"/>
+
+        <RemoveDir Directories="$(GameModPath)" ContinueOnError="true"/>
+        <Exec Command="mklink /D &quot;$(GameModPath)&quot; &quot;$(ModOutputPath)&quot;"
+              IgnoreExitCode="true"/>
+
+    </Target>
+
+    <!-- Global usings -->
+    <ItemGroup>
+        <Using Include="System"/>
+        <Using Include="System.Reflection"/>
+        <Using Include="System.Collections"/>
+        <Using Include="System.Collections.Generic"/>
+        <Using Include="System.Linq"/>
+        <Using Include="System.Runtime.CompilerServices"/>
+        <Using Include="UnityEngine"/>
+        <Using Include="RimWorld"/>
+        <Using Include="Verse"/>
+        <Using Include="Verse.AI"/>
+        <Using Static="true"
+               Include="Verse.TranslatorFormattedStringExtensions"/>
+        <Using Alias="RimRandom" Include="Verse.Rand"/>
+    </ItemGroup>
+
+</Project>

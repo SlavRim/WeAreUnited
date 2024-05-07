@@ -5,7 +5,6 @@ VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Elements", "Solution Elements", "{5E40AB58-070A-466D-B2E7-687C9FA2A193}"
 	ProjectSection(SolutionItems) = preProject
-		src\Shared.mod.props.csproj = src\Shared.mod.props.csproj
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore

@@ -4,6 +4,7 @@
     <attachedFolders>
       <Path>.github/workflows</Path>
       <Path>Assets</Path>
+      <Path>Shared</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />
