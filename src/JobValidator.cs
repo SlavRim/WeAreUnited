@@ -6,7 +6,7 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
     {
         Downed: false, 
         Dead: false,
-#if v1_4
+#if !v1_3
         RaceProps.IsMechanoid: false,
 #endif
         RaceProps.Humanlike: true
@@ -65,10 +65,10 @@ public readonly ref partial struct JobValidator(Pawn Recruiter, Pawn Target)
     }
 
     public bool Recruitable =>
-#if v1_4
-        Target is { guest.Recruitable: true } || Settings.AllowLoyal;
+#if v1_3
+        true; 
 #else
-        true;
+        Target is { guest.Recruitable: true } || Settings.AllowLoyal;
 #endif
 
     /// Expensive Invocation

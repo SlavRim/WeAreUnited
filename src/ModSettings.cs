@@ -8,7 +8,7 @@ public sealed partial class ModSettings : Verse.ModSettings
         {
             ValidateCapability,
             AllowNotRelated,
-#if v1_4
+#if !v1_3
             AllowLoyal,
 #endif
             MinDistanceFromEnemy,

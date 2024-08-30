@@ -1,5 +1,10 @@
 <Project>
 
+    <!-- Absolute paths -->
+    <PropertyGroup>
+        <ProjectDir>$(MSBuildProjectDirectory)\</ProjectDir>
+    </PropertyGroup>
+
     <!-- Setup project properties -->
 
     <PropertyGroup Condition="'$(TargetFramework)' == ''">
@@ -147,9 +152,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <ModOutputPath>$(AssetsDir)</ModOutputPath>
-        <!-- Assets -->
+        <AssetsDir>$([System.IO.Path]::GetFullPath('$(AssetsDir)'))</AssetsDir>
+    </PropertyGroup>
 
+    <PropertyGroup Condition="'$(ModOutputPath)' == ''">
+        <ModOutputPath>$(AssetsDir)</ModOutputPath>
+    </PropertyGroup>
+    
+    <PropertyGroup>
         <ModOutputVersionPath>$(ModOutputPath)$(GameVersion)\</ModOutputVersionPath>
         <!-- Assets\(1.3..1.4)\ -->
 
@@ -243,7 +253,7 @@
         <MakeDir Directories="$(ModOutputVersionPath)" ContinueOnError="true"/>
 
         <RemoveDir Directories="$(ModOutputAssembliesPath)" ContinueOnError="true"/>
-        <Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$(ProjectDir)$(OutputPath)&quot;"
+        <Exec Command="mklink /D &quot;$(ModOutputAssembliesPath)&quot; &quot;$([System.IO.Path]::GetFullPath('$(OutputPath)'))&quot;"
               IgnoreExitCode="true"/>
 
         <RemoveDir Directories="$(GameModPath)" ContinueOnError="true"/>
