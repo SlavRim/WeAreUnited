@@ -46,7 +46,7 @@
 
     <!-- Define if undefined -->
     <PropertyGroup Condition="'$(Configurations)' == ''">
-        <Configurations>1.3_DEBUG;1.3;1.4_DEBUG;1.4;1.5_DEBUG;1.5</Configurations>
+        <Configurations>1.3_DEBUG;1.3;1.4_DEBUG;1.4;1.5_DEBUG;1.5;1.6_DEBUG;1.6</Configurations>
     </PropertyGroup>
 
     <ItemGroup>
@@ -75,7 +75,7 @@
         </When>
         <Otherwise>
             <PropertyGroup>
-                <GameVersion>1.5</GameVersion>
+                <GameVersion>1.6</GameVersion>
             </PropertyGroup>
         </Otherwise>
     </Choose>
@@ -86,13 +86,16 @@
     <Choose>
         <When Condition="'$(RefGameDir)' == ''">
             <PropertyGroup Condition="'$(GameVersion)' == '1.3'">
-                <RefGameDir>D:\Steam\steamapps\common\RimWorld 1.3\</RefGameDir>
+                <RefGameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.3\</RefGameDir>
             </PropertyGroup>
             <PropertyGroup Condition="'$(GameVersion)' == '1.4'">
-                <RefGameDir>D:\Steam\steamapps\common\RimWorld 1.4\</RefGameDir>
+                <RefGameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.4\</RefGameDir>
             </PropertyGroup>
             <PropertyGroup Condition="'$(GameVersion)' == '1.5'">
-                <RefGameDir>D:\Steam\steamapps\common\RimWorld\</RefGameDir>
+                <RefGameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.5\</RefGameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.6'">
+                <RefGameDir>E:\SteamLibrary\steamapps\common\RimWorld\</RefGameDir>
             </PropertyGroup>
         </When>
     </Choose>
@@ -100,13 +103,16 @@
     <Choose>
         <When Condition="'$(GameDir)' == ''">
             <PropertyGroup Condition="'$(GameVersion)' == '1.3'">
-                <GameDir>D:\Steam\steamapps\common\RimWorld 1.3\</GameDir>
+                <GameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.3\</GameDir>
             </PropertyGroup>
             <PropertyGroup Condition="'$(GameVersion)' == '1.4'">
-                <GameDir>D:\Steam\steamapps\common\RimWorld 1.4\</GameDir>
+                <GameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.4\</GameDir>
             </PropertyGroup>
             <PropertyGroup Condition="'$(GameVersion)' == '1.5'">
-                <GameDir>D:\Steam\steamapps\common\RimWorld\</GameDir>
+                <GameDir>E:\SteamLibrary\steamapps\common\RimWorld 1.5\</GameDir>
+            </PropertyGroup>
+            <PropertyGroup Condition="'$(GameVersion)' == '1.6'">
+                <GameDir>E:\SteamLibrary\steamapps\common\RimWorld\</GameDir>
             </PropertyGroup>
         </When>
     </Choose>
@@ -161,12 +167,12 @@
     
     <PropertyGroup>
         <ModOutputVersionPath>$(ModOutputPath)$(GameVersion)\</ModOutputVersionPath>
-        <!-- Assets\(1.3..1.4)\ -->
+        <!-- Assets\(1.3..1.x)\ -->
 
         <ModAssembliesPath>$(GameVersion)\Assemblies\</ModAssembliesPath>
-        <!-- (1.3..1.4)\Assemblies\ -->
+        <!-- (1.3..1.x)\Assemblies\ -->
         <ModOutputAssembliesPath>$(ModOutputPath)$(ModAssembliesPath)</ModOutputAssembliesPath>
-        <!-- Assets\(1.3..1.4)\Assemblies\ -->
+        <!-- Assets\(1.3..1.x)\Assemblies\ -->
     </PropertyGroup>
 
     <!-- Finalize game properties -->
@@ -178,9 +184,9 @@
         <GameModPath>$(GameModsPath)$(ModName)\</GameModPath>
         <!-- Game\Mods\ModName\ -->
         <GameModVersion>$(GameModPath)$(GameVersion)\</GameModVersion>
-        <!-- Game\Mods\ModName\(1.3..1.4)\ -->
+        <!-- Game\Mods\ModName\(1.3..1.x)\ -->
         <GameModAssembliesPath>$(GameModPath)$(ModAssembliesPath)</GameModAssembliesPath>
-        <!-- Game\Mods\ModName\(1.3..1.4)\Assemblies\ -->
+        <!-- Game\Mods\ModName\(1.3..1.x)\Assemblies\ -->
     </PropertyGroup>
 
     <!-- Configure publicizer -->

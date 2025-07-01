@@ -22,6 +22,8 @@ Global
 		1.4|Any CPU = 1.4|Any CPU
 		1.5_DEBUG|Any CPU = 1.5_DEBUG|Any CPU
 		1.5|Any CPU = 1.5|Any CPU
+		1.6|Any CPU = 1.6|Any CPU
+		1.6_DEBUG|Any CPU = 1.6_DEBUG|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.3_DEBUG|Any CPU.ActiveCfg = 1.3_DEBUG|Any CPU
@@ -36,6 +38,10 @@ Global
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5_DEBUG|Any CPU.Build.0 = 1.5_DEBUG|Any CPU
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5|Any CPU.ActiveCfg = 1.5|Any CPU
 		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.5|Any CPU.Build.0 = 1.5|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.6|Any CPU.ActiveCfg = 1.6|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.6|Any CPU.Build.0 = 1.6|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.6_DEBUG|Any CPU.ActiveCfg = 1.6_DEBUG|Any CPU
+		{EBB83B6C-1A7D-4247-980D-379514F94770}.1.6_DEBUG|Any CPU.Build.0 = 1.6_DEBUG|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
